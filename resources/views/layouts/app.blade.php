@@ -17,7 +17,7 @@
 </head>
 <body>
     <div id="app">
-        <shop-layout></shop-layout>
+        @yield('content')
     </div>
 
     <!-- Scripts -->

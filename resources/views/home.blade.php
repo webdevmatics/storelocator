@@ -2,8 +2,6 @@
 
 @section('content')
 
-    <store-layout>
-            
-    </store-layout>
+    <shop-layout></shop-layout>
 
 @endsection

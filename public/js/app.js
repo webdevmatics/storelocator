@@ -563,74 +563,6 @@ exports.default = {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _forEach = __webpack_require__(186);
-
-var _forEach2 = _interopRequireDefault(_forEach);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (vueElement, googleMapObject, events) {
-  (0, _forEach2.default)(events, function (eventName) {
-    var exposedName = eventName;
-    googleMapObject.addListener(eventName, function (ev) {
-      vueElement.$emit(exposedName, ev);
-    });
-  });
-}; /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseClone = __webpack_require__(86);
-
-/** Used to compose bitmasks for cloning. */
-var CLONE_SYMBOLS_FLAG = 4;
-
-/**
- * Creates a shallow clone of `value`.
- *
- * **Note:** This method is loosely based on the
- * [structured clone algorithm](https://mdn.io/Structured_clone_algorithm)
- * and supports cloning arrays, array buffers, booleans, date objects, maps,
- * numbers, `Object` objects, regexes, sets, strings, symbols, and typed
- * arrays. The own enumerable properties of `arguments` objects are cloned
- * as plain objects. An empty object is returned for uncloneable values such
- * as error objects, functions, DOM nodes, and WeakMaps.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to clone.
- * @returns {*} Returns the cloned value.
- * @see _.cloneDeep
- * @example
- *
- * var objects = [{ 'a': 1 }, { 'b': 2 }];
- *
- * var shallow = _.clone(objects);
- * console.log(shallow[0] === objects[0]);
- * // => true
- */
-function clone(value) {
-  return baseClone(value, CLONE_SYMBOLS_FLAG);
-}
-
-module.exports = clone;
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -736,6 +668,74 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _forEach = __webpack_require__(186);
+
+var _forEach2 = _interopRequireDefault(_forEach);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (vueElement, googleMapObject, events) {
+  (0, _forEach2.default)(events, function (eventName) {
+    var exposedName = eventName;
+    googleMapObject.addListener(eventName, function (ev) {
+      vueElement.$emit(exposedName, ev);
+    });
+  });
+}; /* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseClone = __webpack_require__(86);
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_SYMBOLS_FLAG = 4;
+
+/**
+ * Creates a shallow clone of `value`.
+ *
+ * **Note:** This method is loosely based on the
+ * [structured clone algorithm](https://mdn.io/Structured_clone_algorithm)
+ * and supports cloning arrays, array buffers, booleans, date objects, maps,
+ * numbers, `Object` objects, regexes, sets, strings, symbols, and typed
+ * arrays. The own enumerable properties of `arguments` objects are cloned
+ * as plain objects. An empty object is returned for uncloneable values such
+ * as error objects, functions, DOM nodes, and WeakMaps.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to clone.
+ * @returns {*} Returns the cloned value.
+ * @see _.cloneDeep
+ * @example
+ *
+ * var objects = [{ 'a': 1 }, { 'b': 2 }];
+ *
+ * var shallow = _.clone(objects);
+ * console.log(shallow[0] === objects[0]);
+ * // => true
+ */
+function clone(value) {
+  return baseClone(value, CLONE_SYMBOLS_FLAG);
+}
+
+module.exports = clone;
 
 
 /***/ }),
@@ -911,7 +911,7 @@ var arrayMap = __webpack_require__(49),
     baseClone = __webpack_require__(86),
     baseUnset = __webpack_require__(213),
     castPath = __webpack_require__(16),
-    copyObject = __webpack_require__(20),
+    copyObject = __webpack_require__(22),
     customOmitClone = __webpack_require__(217),
     flatRest = __webpack_require__(219),
     getAllKeysIn = __webpack_require__(54);
@@ -1095,206 +1095,6 @@ module.exports = toKey;
 
 /***/ }),
 /* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
-
-var setUp = false;
-
-var loaded = exports.loaded = new Promise(function (resolve, reject) {
-  // eslint-disable-line no-unused-vars
-  if (typeof window === 'undefined') {
-    // Do nothing if run from server-side
-    return;
-  }
-  window['vueGoogleMapsInit'] = resolve;
-});
-
-/**
- * @param apiKey    API Key, or object with the URL parameters. For example
- *                  to use Google Maps Premium API, pass
- *                    `{ client: <YOUR-CLIENT-ID> }`.
- *                  You may pass the libraries and/or version (as `v`) parameter into
- *                  this parameter and skip the next two parameters
- * @param version   Google for Maps version
- * @param libraries Libraries to load (@see
- *                  https://developers.google.com/maps/documentation/javascript/libraries)
- * @param loadCn    Boolean. If set to true, the map will be loaded form goole maps China
- *                  (@see https://developers.google.com/maps/documentation/javascript/basics#GoogleMapsChina)
- *
- * Example:
- * ```
- *      import {load} from 'vue-google-maps'
- *
- *      load(<YOUR-API-KEY>)
- *
- *      load({
- *              key: <YOUR-API-KEY>,
- *      })
- *
- *      load({
- *              client: <YOUR-CLIENT-ID>,
- *              channel: <YOUR CHANNEL>
- *      })
- * ```
- */
-var load = exports.load = function load(apiKey, version, libraries, loadCn) {
-  if (typeof document === 'undefined') {
-    // Do nothing if run from server-side
-    return;
-  }
-  if (!setUp) {
-    var googleMapScript = document.createElement('SCRIPT');
-
-    // Allow apiKey to be an object.
-    // This is to support more esoteric means of loading Google Maps,
-    // such as Google for business
-    // https://developers.google.com/maps/documentation/javascript/get-api-key#premium-auth
-    var options = {};
-    if (typeof apiKey === 'string') {
-      options.key = apiKey;
-    } else if ((typeof apiKey === 'undefined' ? 'undefined' : _typeof(apiKey)) === 'object') {
-      for (var k in apiKey) {
-        // transfer values in apiKey to options
-        options[k] = apiKey[k];
-      }
-    } else {
-      throw new Error('apiKey should either be a string or an object');
-    }
-
-    // libraries
-    var librariesPath = '';
-    if (libraries && libraries.length > 0) {
-      librariesPath = libraries.join(',');
-      options['libraries'] = librariesPath;
-    } else if (Array.prototype.isPrototypeOf(options.libraries)) {
-      options.libraries = options.libraries.join(',');
-    }
-    options['callback'] = 'vueGoogleMapsInit';
-
-    var baseUrl = 'https://maps.googleapis.com/';
-
-    if (typeof loadCn === 'boolean' && loadCn === true) {
-      baseUrl = 'http://maps.google.cn/';
-    }
-
-    var url = baseUrl + 'maps/api/js?' + Object.keys(options).map(function (key) {
-      return encodeURIComponent(key) + '=' + encodeURIComponent(options[key]);
-    }).join('&');
-
-    if (version) {
-      url = url + '&v=' + version;
-    }
-
-    googleMapScript.setAttribute('src', url);
-    googleMapScript.setAttribute('async', '');
-    googleMapScript.setAttribute('defer', '');
-    document.head.appendChild(googleMapScript);
-  } else {
-    throw new Error('You already started the loading of google maps');
-  }
-};
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayLikeKeys = __webpack_require__(72),
-    baseKeys = __webpack_require__(131),
-    isArrayLike = __webpack_require__(40);
-
-/**
- * Creates an array of the own enumerable property names of `object`.
- *
- * **Note:** Non-object values are coerced to objects. See the
- * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
- * for more details.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.keys(new Foo);
- * // => ['a', 'b'] (iteration order is not guaranteed)
- *
- * _.keys('hi');
- * // => ['0', '1']
- */
-function keys(object) {
-  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
-}
-
-module.exports = keys;
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var assignValue = __webpack_require__(52),
-    baseAssignValue = __webpack_require__(32);
-
-/**
- * Copies properties of `source` to `object`.
- *
- * @private
- * @param {Object} source The object to copy properties from.
- * @param {Array} props The property identifiers to copy.
- * @param {Object} [object={}] The object to copy properties to.
- * @param {Function} [customizer] The function to customize copied values.
- * @returns {Object} Returns `object`.
- */
-function copyObject(source, props, object, customizer) {
-  var isNew = !object;
-  object || (object = {});
-
-  var index = -1,
-      length = props.length;
-
-  while (++index < length) {
-    var key = props[index];
-
-    var newValue = customizer
-      ? customizer(object[key], source[key], key, object, source)
-      : undefined;
-
-    if (newValue === undefined) {
-      newValue = source[key];
-    }
-    if (isNew) {
-      baseAssignValue(object, key, newValue);
-    } else {
-      assignValue(object, key, newValue);
-    }
-  }
-  return object;
-}
-
-module.exports = copyObject;
-
-
-/***/ }),
-/* 21 */
 /***/ (function(module, exports) {
 
 /*
@@ -1376,7 +1176,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 22 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1601,6 +1401,206 @@ function applyToTag (styleElement, obj) {
     styleElement.appendChild(document.createTextNode(css))
   }
 }
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/* vim: set softtabstop=2 shiftwidth=2 expandtab : */
+
+var setUp = false;
+
+var loaded = exports.loaded = new Promise(function (resolve, reject) {
+  // eslint-disable-line no-unused-vars
+  if (typeof window === 'undefined') {
+    // Do nothing if run from server-side
+    return;
+  }
+  window['vueGoogleMapsInit'] = resolve;
+});
+
+/**
+ * @param apiKey    API Key, or object with the URL parameters. For example
+ *                  to use Google Maps Premium API, pass
+ *                    `{ client: <YOUR-CLIENT-ID> }`.
+ *                  You may pass the libraries and/or version (as `v`) parameter into
+ *                  this parameter and skip the next two parameters
+ * @param version   Google for Maps version
+ * @param libraries Libraries to load (@see
+ *                  https://developers.google.com/maps/documentation/javascript/libraries)
+ * @param loadCn    Boolean. If set to true, the map will be loaded form goole maps China
+ *                  (@see https://developers.google.com/maps/documentation/javascript/basics#GoogleMapsChina)
+ *
+ * Example:
+ * ```
+ *      import {load} from 'vue-google-maps'
+ *
+ *      load(<YOUR-API-KEY>)
+ *
+ *      load({
+ *              key: <YOUR-API-KEY>,
+ *      })
+ *
+ *      load({
+ *              client: <YOUR-CLIENT-ID>,
+ *              channel: <YOUR CHANNEL>
+ *      })
+ * ```
+ */
+var load = exports.load = function load(apiKey, version, libraries, loadCn) {
+  if (typeof document === 'undefined') {
+    // Do nothing if run from server-side
+    return;
+  }
+  if (!setUp) {
+    var googleMapScript = document.createElement('SCRIPT');
+
+    // Allow apiKey to be an object.
+    // This is to support more esoteric means of loading Google Maps,
+    // such as Google for business
+    // https://developers.google.com/maps/documentation/javascript/get-api-key#premium-auth
+    var options = {};
+    if (typeof apiKey === 'string') {
+      options.key = apiKey;
+    } else if ((typeof apiKey === 'undefined' ? 'undefined' : _typeof(apiKey)) === 'object') {
+      for (var k in apiKey) {
+        // transfer values in apiKey to options
+        options[k] = apiKey[k];
+      }
+    } else {
+      throw new Error('apiKey should either be a string or an object');
+    }
+
+    // libraries
+    var librariesPath = '';
+    if (libraries && libraries.length > 0) {
+      librariesPath = libraries.join(',');
+      options['libraries'] = librariesPath;
+    } else if (Array.prototype.isPrototypeOf(options.libraries)) {
+      options.libraries = options.libraries.join(',');
+    }
+    options['callback'] = 'vueGoogleMapsInit';
+
+    var baseUrl = 'https://maps.googleapis.com/';
+
+    if (typeof loadCn === 'boolean' && loadCn === true) {
+      baseUrl = 'http://maps.google.cn/';
+    }
+
+    var url = baseUrl + 'maps/api/js?' + Object.keys(options).map(function (key) {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(options[key]);
+    }).join('&');
+
+    if (version) {
+      url = url + '&v=' + version;
+    }
+
+    googleMapScript.setAttribute('src', url);
+    googleMapScript.setAttribute('async', '');
+    googleMapScript.setAttribute('defer', '');
+    document.head.appendChild(googleMapScript);
+  } else {
+    throw new Error('You already started the loading of google maps');
+  }
+};
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeKeys = __webpack_require__(72),
+    baseKeys = __webpack_require__(131),
+    isArrayLike = __webpack_require__(40);
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+module.exports = keys;
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var assignValue = __webpack_require__(52),
+    baseAssignValue = __webpack_require__(32);
+
+/**
+ * Copies properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy properties from.
+ * @param {Array} props The property identifiers to copy.
+ * @param {Object} [object={}] The object to copy properties to.
+ * @param {Function} [customizer] The function to customize copied values.
+ * @returns {Object} Returns `object`.
+ */
+function copyObject(source, props, object, customizer) {
+  var isNew = !object;
+  object || (object = {});
+
+  var index = -1,
+      length = props.length;
+
+  while (++index < length) {
+    var key = props[index];
+
+    var newValue = customizer
+      ? customizer(object[key], source[key], key, object, source)
+      : undefined;
+
+    if (newValue === undefined) {
+      newValue = source[key];
+    }
+    if (isNew) {
+      baseAssignValue(object, key, newValue);
+    } else {
+      assignValue(object, key, newValue);
+    }
+  }
+  return object;
+}
+
+module.exports = copyObject;
 
 
 /***/ }),
@@ -16363,7 +16363,7 @@ module.exports = toSource;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFor = __webpack_require__(71),
-    keys = __webpack_require__(19);
+    keys = __webpack_require__(21);
 
 /**
  * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -16689,7 +16689,7 @@ module.exports = Uint8Array;
 
 var baseGetAllKeys = __webpack_require__(80),
     getSymbols = __webpack_require__(46),
-    keys = __webpack_require__(19);
+    keys = __webpack_require__(21);
 
 /**
  * Creates an array of own enumerable property names and symbols of `object`.
@@ -16879,7 +16879,7 @@ var Stack = __webpack_require__(41),
     isMap = __webpack_require__(207),
     isObject = __webpack_require__(11),
     isSet = __webpack_require__(209),
-    keys = __webpack_require__(19);
+    keys = __webpack_require__(21);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -17170,7 +17170,7 @@ exports.default = function (input) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(91);
-module.exports = __webpack_require__(274);
+module.exports = __webpack_require__(279);
 
 
 /***/ }),
@@ -17219,7 +17219,7 @@ Vue.component('example-component', __webpack_require__(256));
 Vue.component('shop-layout', __webpack_require__(259));
 Vue.component('shop-map', __webpack_require__(264));
 Vue.component('place-search', __webpack_require__(269));
-Vue.component('results', __webpack_require__(279));
+Vue.component('results', __webpack_require__(274));
 
 var app = new Vue({
     el: '#app'
@@ -68015,7 +68015,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.MountableMixin = exports.Autocomplete = exports.MapElementMixin = exports.PlaceInput = exports.Map = exports.InfoWindow = exports.Rectangle = exports.Circle = exports.Polygon = exports.Polyline = exports.Cluster = exports.Marker = exports.loaded = exports.load = undefined;
 exports.install = install;
 
-var _manager = __webpack_require__(18);
+var _manager = __webpack_require__(20);
 
 var _marker = __webpack_require__(119);
 
@@ -68140,7 +68140,7 @@ var _mapValues = __webpack_require__(65);
 
 var _mapValues2 = _interopRequireDefault(_mapValues);
 
-var _eventsBinder = __webpack_require__(5);
+var _eventsBinder = __webpack_require__(6);
 
 var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
 
@@ -69941,7 +69941,7 @@ module.exports = WeakMap;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isStrictComparable = __webpack_require__(82),
-    keys = __webpack_require__(19);
+    keys = __webpack_require__(21);
 
 /**
  * Gets the property names, values, and compare flags of `object`.
@@ -70675,11 +70675,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _clone = __webpack_require__(6);
+var _clone = __webpack_require__(7);
 
 var _clone2 = _interopRequireDefault(_clone);
 
-var _eventsBinder = __webpack_require__(5);
+var _eventsBinder = __webpack_require__(6);
 
 var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
 
@@ -70785,8 +70785,8 @@ exports.default = {
 /* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(20),
-    keys = __webpack_require__(19);
+var copyObject = __webpack_require__(22),
+    keys = __webpack_require__(21);
 
 /**
  * The base implementation of `_.assign` without support for multiple sources
@@ -70808,7 +70808,7 @@ module.exports = baseAssign;
 /* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(20),
+var copyObject = __webpack_require__(22),
     keysIn = __webpack_require__(51);
 
 /**
@@ -70899,7 +70899,7 @@ module.exports = copyArray;
 /* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(20),
+var copyObject = __webpack_require__(22),
     getSymbols = __webpack_require__(46);
 
 /**
@@ -70921,7 +70921,7 @@ module.exports = copySymbols;
 /* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(20),
+var copyObject = __webpack_require__(22),
     getSymbolsIn = __webpack_require__(87);
 
 /**
@@ -72976,11 +72976,11 @@ var _omit = __webpack_require__(12);
 
 var _omit2 = _interopRequireDefault(_omit);
 
-var _clone = __webpack_require__(6);
+var _clone = __webpack_require__(7);
 
 var _clone2 = _interopRequireDefault(_clone);
 
-var _eventsBinder = __webpack_require__(5);
+var _eventsBinder = __webpack_require__(6);
 
 var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
 
@@ -73615,11 +73615,11 @@ var _omit = __webpack_require__(12);
 
 var _omit2 = _interopRequireDefault(_omit);
 
-var _clone = __webpack_require__(6);
+var _clone = __webpack_require__(7);
 
 var _clone2 = _interopRequireDefault(_clone);
 
-var _eventsBinder = __webpack_require__(5);
+var _eventsBinder = __webpack_require__(6);
 
 var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
 
@@ -73785,11 +73785,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _clone = __webpack_require__(6);
+var _clone = __webpack_require__(7);
 
 var _clone2 = _interopRequireDefault(_clone);
 
-var _eventsBinder = __webpack_require__(5);
+var _eventsBinder = __webpack_require__(6);
 
 var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
 
@@ -73889,11 +73889,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _clone = __webpack_require__(6);
+var _clone = __webpack_require__(7);
 
 var _clone2 = _interopRequireDefault(_clone);
 
-var _eventsBinder = __webpack_require__(5);
+var _eventsBinder = __webpack_require__(6);
 
 var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
 
@@ -73966,7 +73966,7 @@ exports.default = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(233)
 /* template */
@@ -74023,7 +74023,7 @@ var _omit = __webpack_require__(12);
 
 var _omit2 = _interopRequireDefault(_omit);
 
-var _clone = __webpack_require__(6);
+var _clone = __webpack_require__(7);
 
 var _clone2 = _interopRequireDefault(_clone);
 
@@ -74031,7 +74031,7 @@ var _propsBinder = __webpack_require__(2);
 
 var _propsBinder2 = _interopRequireDefault(_propsBinder);
 
-var _eventsBinder = __webpack_require__(5);
+var _eventsBinder = __webpack_require__(6);
 
 var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
 
@@ -74163,7 +74163,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(236)
 }
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(239)
 /* template */
@@ -74216,7 +74216,7 @@ var content = __webpack_require__(237);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(22)("9895f004", content, false, {});
+var update = __webpack_require__(19)("9895f004", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -74235,7 +74235,7 @@ if(false) {
 /* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+exports = module.exports = __webpack_require__(18)(false);
 // imports
 
 
@@ -74293,15 +74293,15 @@ var _omit = __webpack_require__(12);
 
 var _omit2 = _interopRequireDefault(_omit);
 
-var _clone = __webpack_require__(6);
+var _clone = __webpack_require__(7);
 
 var _clone2 = _interopRequireDefault(_clone);
 
-var _manager = __webpack_require__(18);
+var _manager = __webpack_require__(20);
 
 var _deferredReady = __webpack_require__(30);
 
-var _eventsBinder = __webpack_require__(5);
+var _eventsBinder = __webpack_require__(6);
 
 var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
 
@@ -74590,7 +74590,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(243)
 }
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(245)
 /* template */
@@ -74643,7 +74643,7 @@ var content = __webpack_require__(244);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(22)("29ce6eb1", content, false, {});
+var update = __webpack_require__(19)("29ce6eb1", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -74662,7 +74662,7 @@ if(false) {
 /* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+exports = module.exports = __webpack_require__(18)(false);
 // imports
 
 
@@ -74687,11 +74687,11 @@ var _omit = __webpack_require__(12);
 
 var _omit2 = _interopRequireDefault(_omit);
 
-var _manager = __webpack_require__(18);
+var _manager = __webpack_require__(20);
 
 var _deferredReady = __webpack_require__(30);
 
-var _eventsBinder = __webpack_require__(5);
+var _eventsBinder = __webpack_require__(6);
 
 var _eventsBinder2 = _interopRequireDefault(_eventsBinder);
 
@@ -74895,7 +74895,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(248)
 /* template */
@@ -74952,7 +74952,7 @@ var _omit = __webpack_require__(12);
 
 var _omit2 = _interopRequireDefault(_omit);
 
-var _clone = __webpack_require__(6);
+var _clone = __webpack_require__(7);
 
 var _clone2 = _interopRequireDefault(_clone);
 
@@ -74968,7 +74968,7 @@ var _getPropsValuesMixin = __webpack_require__(4);
 
 var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
 
-var _manager = __webpack_require__(18);
+var _manager = __webpack_require__(20);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -75084,7 +75084,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(251)
 /* template */
@@ -75137,7 +75137,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _clone = __webpack_require__(6);
+var _clone = __webpack_require__(7);
 
 var _clone2 = _interopRequireDefault(_clone);
 
@@ -75161,7 +75161,7 @@ var _getPropsValuesMixin = __webpack_require__(4);
 
 var _getPropsValuesMixin2 = _interopRequireDefault(_getPropsValuesMixin);
 
-var _manager = __webpack_require__(18);
+var _manager = __webpack_require__(20);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -75399,7 +75399,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(257)
 /* template */
@@ -75520,13 +75520,13 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(260)
+  __webpack_require__(284)
 }
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(262)
 /* template */
-var __vue_template__ = __webpack_require__(263)
+var __vue_template__ = __webpack_require__(286)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -75565,46 +75565,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 260 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(261);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(22)("032c8ced", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3afc77\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShopLayout.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3afc77\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShopLayout.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 261 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(21)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n#keep main .container[data-v-0d3afc77] {\n  height: 660px;\n}\n.navigation-drawer__border[data-v-0d3afc77] {\n  display: none;\n}\n.text[data-v-0d3afc77] {\n  font-weight: 400;\n}\n.autocomplete[data-v-0d3afc77] {\n  width: 200px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 260 */,
+/* 261 */,
 /* 262 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -75650,82 +75612,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 263 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    { attrs: { id: "inspire" } },
-    [
-      _c("results"),
-      _vm._v(" "),
-      _c(
-        "v-toolbar",
-        {
-          attrs: { color: "amber", app: "", absolute: "", "clipped-left": "" }
-        },
-        [
-          _c("v-toolbar-side-icon", {
-            nativeOn: {
-              click: function($event) {
-                _vm.drawer = !_vm.drawer
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "title ml-3 mr-5" }, [
-            _vm._v("StoreLocator "),
-            _c("span", { staticClass: "text" }, [_vm._v("App")])
-          ]),
-          _vm._v(" "),
-          _c("place-search"),
-          _vm._v(" "),
-          _c("v-spacer")
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-content",
-        [
-          _c(
-            "v-container",
-            {
-              staticClass: "grey lighten-4",
-              attrs: { fluid: "", "fill-height": "" }
-            },
-            [
-              _c(
-                "v-layout",
-                { attrs: { "justify-center": "", "align-center": "" } },
-                [_c("shop-map")],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0d3afc77", module.exports)
-  }
-}
-
-/***/ }),
+/* 263 */,
 /* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -75734,7 +75621,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(265)
 }
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(267)
 /* template */
@@ -75787,7 +75674,7 @@ var content = __webpack_require__(266);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(22)("17f21964", content, false, {});
+var update = __webpack_require__(19)("17f21964", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -75806,7 +75693,7 @@ if(false) {
 /* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+exports = module.exports = __webpack_require__(18)(false);
 // imports
 
 
@@ -75978,7 +75865,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(270)
 }
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(272)
 /* template */
@@ -76031,7 +75918,7 @@ var content = __webpack_require__(271);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(22)("c0b16074", content, false, {});
+var update = __webpack_require__(19)("c0b16074", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -76050,7 +75937,7 @@ if(false) {
 /* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+exports = module.exports = __webpack_require__(18)(false);
 // imports
 
 
@@ -76195,8 +76082,7 @@ var render = function() {
                     expression: "radius"
                   }
                 ],
-                staticClass: "p-5",
-                staticStyle: { width: "100px" },
+                staticClass: "input-group__input",
                 on: {
                   change: [
                     function($event) {
@@ -76249,28 +76135,18 @@ if (false) {
 
 /***/ }),
 /* 274 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(280)
+  __webpack_require__(275)
 }
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(282)
+var __vue_script__ = __webpack_require__(277)
 /* template */
-var __vue_template__ = __webpack_require__(283)
+var __vue_template__ = __webpack_require__(278)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -76309,17 +76185,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 280 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(281);
+var content = __webpack_require__(276);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(22)("79c0fc46", content, false, {});
+var update = __webpack_require__(19)("79c0fc46", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -76335,10 +76211,10 @@ if(false) {
 }
 
 /***/ }),
-/* 281 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(21)(false);
+exports = module.exports = __webpack_require__(18)(false);
 // imports
 
 
@@ -76349,7 +76225,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 282 */
+/* 277 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -76427,7 +76303,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 283 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -76497,6 +76373,132 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-0d3fd062", module.exports)
+  }
+}
+
+/***/ }),
+/* 279 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(285);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(19)("032c8ced", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3afc77\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShopLayout.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3afc77\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShopLayout.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 285 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#keep main .container[data-v-0d3afc77] {\r\n  height: 660px;\n}\n.navigation-drawer__border[data-v-0d3afc77] {\r\n  display: none;\n}\n.text[data-v-0d3afc77] {\r\n  font-weight: 400;\n}\n.autocomplete[data-v-0d3afc77] {\r\n  width: 200px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 286 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    { attrs: { id: "inspire" } },
+    [
+      _c("results"),
+      _vm._v(" "),
+      _c(
+        "v-toolbar",
+        {
+          attrs: { color: "amber", app: "", absolute: "", "clipped-left": "" }
+        },
+        [
+          _c("v-toolbar-side-icon", {
+            nativeOn: {
+              click: function($event) {
+                _vm.drawer = !_vm.drawer
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "title ml-3 mr-5" }, [
+            _vm._v("StoreLocator "),
+            _c("span", { staticClass: "text" }, [_vm._v("App")])
+          ]),
+          _vm._v(" "),
+          _c("place-search"),
+          _vm._v(" "),
+          _c("v-spacer")
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-content",
+        [
+          _c(
+            "v-container",
+            {
+              staticClass: "grey lighten-4",
+              attrs: { fluid: "", "fill-height": "" }
+            },
+            [
+              _c(
+                "v-layout",
+                { attrs: { "justify-center": "", "align-center": "" } },
+                [_c("shop-map")],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0d3afc77", module.exports)
   }
 }
 
