@@ -38,28 +38,7 @@
         methods: {
             focusMarker(index){
                 Bus.$emit('marker_result_clicked',index);
-            },
-            fetchNearestLocations() {
-                axios.post('/api/nearest-shops', {center: this.center,radius:this.radius})
-                    .then(response => {
-                        let data = response.data;
-                        Bus.$emit('markers_fetched', data);
-                        console.log(response);
-                    });
-                ;
-            },
-            getPlace(place){
-                let center = {
-                    lat: place.geometry.location.lat(),
-                    lng: place.geometry.location.lng()
-                };
-                this.center=center;
-                this.fetchNearestLocations();
-            },
-            onRadiusChange(){
-                console.log(this.radius);
             }
-
         },
         created(){
             Bus.$on('markers_fetched',data=>{

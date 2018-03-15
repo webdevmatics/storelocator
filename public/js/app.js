@@ -76219,7 +76219,7 @@ exports = module.exports = __webpack_require__(18)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -76270,25 +76270,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         focusMarker: function focusMarker(index) {
             Bus.$emit('marker_result_clicked', index);
-        },
-        fetchNearestLocations: function fetchNearestLocations() {
-            axios.post('/api/nearest-shops', { center: this.center, radius: this.radius }).then(function (response) {
-                var data = response.data;
-                Bus.$emit('markers_fetched', data);
-                console.log(response);
-            });
-            ;
-        },
-        getPlace: function getPlace(place) {
-            var center = {
-                lat: place.geometry.location.lat(),
-                lng: place.geometry.location.lng()
-            };
-            this.center = center;
-            this.fetchNearestLocations();
-        },
-        onRadiusChange: function onRadiusChange() {
-            console.log(this.radius);
         }
     },
     created: function created() {
