@@ -75811,7 +75811,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -75839,17 +75839,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             center: { lat: 42.363211, lng: -105.071875 },
             zoom: 5,
-            markers: []
+            markers: [],
+            infoContent: '',
+            infoWindowPos: {
+                lat: 0,
+                lng: 0
+            },
+            infoWinOpen: false,
+            currentMidx: null,
+            infoOptions: {
+                pixelOffset: {
+                    width: 0,
+                    height: -35
+                }
+            }
         };
     },
 
     methods: {
+        toggleInfoWindow: function toggleInfoWindow(marker, idx) {
+
+            this.infoWindowPos = marker.position;
+            this.infoContent = marker.name;
+
+            //check if its the same marker that was selected if yes toggle
+            if (this.currentMidx == idx) {
+                this.infoWinOpen = !this.infoWinOpen;
+            }
+            //if different marker set infowindow to open and reset current marker index
+            else {
+                    this.infoWinOpen = true;
+                    this.currentMidx = idx;
+                }
+        },
         fetchLocations: function fetchLocations() {
             axios.post('/api/nearest-shops', { center: this.center }).then(function (response) {
                 var data = response.data;
@@ -75870,6 +75903,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             console.log('event data', data);
         });
+
+        Bus.$on('marker_result_clicked', function (index) {
+            var targetMarker = _this.markers[index];
+            _this.center = targetMarker.position;
+            _this.toggleInfoWindow(targetMarker, index);
+        });
     }
 });
 
@@ -75887,17 +75926,37 @@ var render = function() {
       staticStyle: { width: "1300px", height: "100%" },
       attrs: { center: _vm.center, zoom: _vm.zoom }
     },
-    _vm._l(_vm.markers, function(m, index) {
-      return _c("gmap-marker", {
-        key: index,
-        attrs: { position: m.position, clickable: true, draggable: true },
-        on: {
-          click: function($event) {
-            _vm.center = m.position
+    [
+      _vm._l(_vm.markers, function(m, index) {
+        return _c("gmap-marker", {
+          key: index,
+          attrs: { position: m.position, clickable: true, draggable: true },
+          on: {
+            click: function($event) {
+              _vm.toggleInfoWindow(m, index)
+            }
           }
-        }
-      })
-    })
+        })
+      }),
+      _vm._v(" "),
+      _c(
+        "gmap-info-window",
+        {
+          attrs: {
+            options: _vm.infoOptions,
+            position: _vm.infoWindowPos,
+            opened: _vm.infoWinOpen
+          },
+          on: {
+            closeclick: function($event) {
+              _vm.infoWinOpen = false
+            }
+          }
+        },
+        [_vm._v("\n    " + _vm._s(_vm.infoContent) + "\n    ")]
+      )
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -76284,7 +76343,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -76324,30 +76383,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -76357,6 +76392,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     methods: {
+        focusMarker: function focusMarker(index) {
+            Bus.$emit('marker_result_clicked', index);
+        },
         fetchNearestLocations: function fetchNearestLocations() {
             axios.post('/api/nearest-shops', { center: this.center, radius: this.radius }).then(function (response) {
                 var data = response.data;
@@ -76416,77 +76454,33 @@ var render = function() {
         [
           _vm._l(_vm.results, function(item, i) {
             return [
-              item.heading
-                ? _c(
-                    "v-layout",
-                    { key: i, attrs: { row: "", "align-center": "" } },
+              _c(
+                "v-list-tile",
+                {
+                  key: i,
+                  on: {
+                    click: function($event) {
+                      _vm.focusMarker(i)
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "v-list-tile-content",
                     [
-                      _c(
-                        "v-flex",
-                        { attrs: { xs6: "" } },
-                        [
-                          item.heading
-                            ? _c("v-subheader", [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(item.heading) +
-                                    "\n          "
-                                )
-                              ])
-                            : _vm._e()
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-flex",
-                        { staticClass: "text-xs-right", attrs: { xs6: "" } },
-                        [
-                          _c("v-btn", { attrs: { small: "", flat: "" } }, [
-                            _vm._v("edit")
-                          ])
-                        ],
-                        1
-                      )
+                      _c("v-list-tile-title", { staticClass: "grey--text" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(item.text) +
+                            "\n          "
+                        )
+                      ])
                     ],
                     1
                   )
-                : item.divider
-                  ? _c("v-divider", {
-                      key: i,
-                      staticClass: "my-3",
-                      attrs: { dark: "" }
-                    })
-                  : _c(
-                      "v-list-tile",
-                      { key: i, on: { click: function($event) {} } },
-                      [
-                        _c(
-                          "v-list-tile-action",
-                          [_c("v-icon", [_vm._v(_vm._s(item.icon))])],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile-content",
-                          [
-                            _c(
-                              "v-list-tile-title",
-                              { staticClass: "grey--text" },
-                              [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(item.text) +
-                                    "\n          "
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
+                ],
+                1
+              )
             ]
           })
         ],

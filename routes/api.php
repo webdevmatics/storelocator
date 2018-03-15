@@ -30,7 +30,8 @@ Route::post('/nearest-shops', function () {
 
     $markers = collect($results)->map(function ($item, $key) {
         return [
-            'position' => ['lat' => $item->lat, 'lng' => $item->lng]
+            'position' => ['lat' => $item->lat, 'lng' => $item->lng],
+            'name'=>$item->name
         ];
     });
 
