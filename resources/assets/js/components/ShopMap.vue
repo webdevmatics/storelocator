@@ -29,7 +29,8 @@ export default {
             axios.post('/api/nearest-shops',{center:this.center})
                 .then(response=>{
                     let data=response.data;
-                    this.markers=data.markers;
+                    Bus.$emit('markers_fetched',data);
+//                    this.markers=data.markers;
                 });
             ;
         }
@@ -38,7 +39,9 @@ export default {
         this.fetchLocations();
         Bus.$on('markers_fetched',data=>{
             this.markers=data.markers;
-            this.center=data.markers[0].position;
+            if(this.markers.length>0){
+                this.center=data.markers[0].position;
+            }
             console.log('event data',data);
         })
     }

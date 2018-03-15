@@ -24,7 +24,7 @@ Route::post('/nearest-shops', function () {
     $lng=$center['lng'];
 //    $lat=35.985510;
 //    $lng=-121.561489;
-    $distance=200;
+    $distance=request('radius')??200;
     // Search the rows in the markers table
     $results = DB::select(DB::raw('SELECT *, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat .') ) * sin( radians(lat) ) ) ) AS distance FROM shops HAVING distance < ' . $distance . ' ORDER BY distance') );
 
@@ -33,10 +33,18 @@ Route::post('/nearest-shops', function () {
             'position' => ['lat' => $item->lat, 'lng' => $item->lng]
         ];
     });
+
+    $formattedResults = collect($results)->map(function ($item, $key) {
+        return [
+            'text'=>$item->name
+        ];
+    });
+
+
     $data=[
         'status'=>'success',
         'markers'=>$markers,
-        'data'=>$results
+        'results'=>$formattedResults
     ];
     return response($data,200);
 });

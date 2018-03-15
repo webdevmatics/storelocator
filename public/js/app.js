@@ -17219,6 +17219,7 @@ Vue.component('example-component', __webpack_require__(256));
 Vue.component('shop-layout', __webpack_require__(259));
 Vue.component('shop-map', __webpack_require__(264));
 Vue.component('place-search', __webpack_require__(269));
+Vue.component('results', __webpack_require__(279));
 
 var app = new Vue({
     el: '#app'
@@ -75638,61 +75639,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      drawer: null,
-      items: [{ icon: "lightbulb_outline", text: "Notes" }, { icon: "touch_app", text: "Reminders" }, { icon: "add", text: "Create new label" }, { icon: "archive", text: "Archive" }, { icon: "delete", text: "Trash" }, { icon: "settings", text: "Settings" }, { icon: "chat_bubble", text: "Trash" }, { icon: "help", text: "Help" }, { icon: "phonelink", text: "App downloads" }, { icon: "keyboard", text: "Keyboard shortcuts" }]
-    };
-  },
+
   props: {
     source: String
   },
@@ -75712,108 +75661,7 @@ var render = function() {
     "v-app",
     { attrs: { id: "inspire" } },
     [
-      _c(
-        "v-navigation-drawer",
-        {
-          staticClass: "grey lighten-4",
-          attrs: { fixed: "", clipped: "", app: "" },
-          model: {
-            value: _vm.drawer,
-            callback: function($$v) {
-              _vm.drawer = $$v
-            },
-            expression: "drawer"
-          }
-        },
-        [
-          _c(
-            "v-list",
-            { staticClass: "grey lighten-4", attrs: { dense: "" } },
-            [
-              _vm._l(_vm.items, function(item, i) {
-                return [
-                  item.heading
-                    ? _c(
-                        "v-layout",
-                        { key: i, attrs: { row: "", "align-center": "" } },
-                        [
-                          _c(
-                            "v-flex",
-                            { attrs: { xs6: "" } },
-                            [
-                              item.heading
-                                ? _c("v-subheader", [
-                                    _vm._v(
-                                      "\n              " +
-                                        _vm._s(item.heading) +
-                                        "\n            "
-                                    )
-                                  ])
-                                : _vm._e()
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-flex",
-                            {
-                              staticClass: "text-xs-right",
-                              attrs: { xs6: "" }
-                            },
-                            [
-                              _c("v-btn", { attrs: { small: "", flat: "" } }, [
-                                _vm._v("edit")
-                              ])
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    : item.divider
-                      ? _c("v-divider", {
-                          key: i,
-                          staticClass: "my-3",
-                          attrs: { dark: "" }
-                        })
-                      : _c(
-                          "v-list-tile",
-                          { key: i, on: { click: function($event) {} } },
-                          [
-                            _c(
-                              "v-list-tile-action",
-                              [_c("v-icon", [_vm._v(_vm._s(item.icon))])],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-tile-content",
-                              [
-                                _c(
-                                  "v-list-tile-title",
-                                  { staticClass: "grey--text" },
-                                  [
-                                    _vm._v(
-                                      "\n              " +
-                                        _vm._s(item.text) +
-                                        "\n            "
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                ]
-              })
-            ],
-            2
-          )
-        ],
-        1
-      ),
+      _c("results"),
       _vm._v(" "),
       _c(
         "v-toolbar",
@@ -75963,7 +75811,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -76003,22 +75851,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         fetchLocations: function fetchLocations() {
-            var _this = this;
-
             axios.post('/api/nearest-shops', { center: this.center }).then(function (response) {
                 var data = response.data;
-                _this.markers = data.markers;
+                Bus.$emit('markers_fetched', data);
+                //                    this.markers=data.markers;
             });
             ;
         }
     },
     created: function created() {
-        var _this2 = this;
+        var _this = this;
 
         this.fetchLocations();
         Bus.$on('markers_fetched', function (data) {
-            _this2.markers = data.markers;
-            _this2.center = data.markers[0].position;
+            _this.markers = data.markers;
+            if (_this.markers.length > 0) {
+                _this.center = data.markers[0].position;
+            }
             console.log('event data', data);
         });
     }
@@ -76147,7 +75996,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -76177,15 +76026,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            center: { lat: 42.363211, lng: -105.071875 },
+            radiusOptions: [100, 200, 300],
+            radius: 200
+        };
     },
 
     methods: {
-        fetchNearestLocations: function fetchNearestLocations(center) {
-            axios.post('/api/nearest-shops', { center: center }).then(function (response) {
+        fetchNearestLocations: function fetchNearestLocations() {
+            axios.post('/api/nearest-shops', { center: this.center, radius: this.radius }).then(function (response) {
                 var data = response.data;
                 Bus.$emit('markers_fetched', data);
                 console.log(response);
@@ -76197,7 +76071,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 lat: place.geometry.location.lat(),
                 lng: place.geometry.location.lng()
             };
-            this.fetchNearestLocations(center);
+            this.center = center;
+            this.fetchNearestLocations();
+        },
+        onRadiusChange: function onRadiusChange() {
+            console.log(this.radius);
         }
     }
 });
@@ -76211,33 +76089,93 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    {
-      staticClass:
-        "input-group input-group--prepend-icon input-group--solo input-group--solo-inverted elevation-0 input-group--text-field input-group--single-line primary--text"
-    },
+    "span",
     [
-      _c("label"),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "input-group__input" },
-        [
-          _c("i", {
-            staticClass: "icon material-icons input-group__prepend-icon",
-            attrs: { "aria-hidden": "true" }
-          }),
-          _vm._v(" "),
-          _c("gmap-autocomplete", {
-            staticClass: "autocomplete",
-            on: { place_changed: _vm.getPlace }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group__details" })
-    ]
+      _c("v-layout", { attrs: { row: "" } }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              " my-3 input-group input-group--prepend-icon input-group--solo input-group--solo-inverted elevation-0 input-group--text-field input-group--single-line primary--text",
+            staticStyle: { width: "400px" }
+          },
+          [
+            _c("label"),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "input-group__input" },
+              [
+                _c("i", {
+                  staticClass: "icon material-icons input-group__prepend-icon",
+                  attrs: { "aria-hidden": "true" }
+                }),
+                _vm._v(" "),
+                _c("gmap-autocomplete", {
+                  staticClass: "autocomplete",
+                  on: { place_changed: _vm.getPlace }
+                })
+              ],
+              1
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "ml-3 mt-4", staticStyle: { width: "200px" } },
+          [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.radius,
+                    expression: "radius"
+                  }
+                ],
+                staticClass: "p-5",
+                staticStyle: { width: "100px" },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.radius = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.fetchNearestLocations
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("Select Radius")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "100" } }, [_vm._v("100")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "200" } }, [_vm._v("200")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "300" } }, [_vm._v("300")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "400" } }, [_vm._v("400")])
+              ]
+            )
+          ]
+        )
+      ])
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -76255,6 +76193,318 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(280)
+}
+var normalizeComponent = __webpack_require__(7)
+/* script */
+var __vue_script__ = __webpack_require__(282)
+/* template */
+var __vue_template__ = __webpack_require__(283)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Results.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0d3fd062", Component.options)
+  } else {
+    hotAPI.reload("data-v-0d3fd062", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 280 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(281);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(22)("79c0fc46", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3fd062\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Results.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3fd062\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Results.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 281 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(21)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 282 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            drawer: null,
+            results: []
+        };
+    },
+    methods: {
+        fetchNearestLocations: function fetchNearestLocations() {
+            axios.post('/api/nearest-shops', { center: this.center, radius: this.radius }).then(function (response) {
+                var data = response.data;
+                Bus.$emit('markers_fetched', data);
+                console.log(response);
+            });
+            ;
+        },
+        getPlace: function getPlace(place) {
+            var center = {
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng()
+            };
+            this.center = center;
+            this.fetchNearestLocations();
+        },
+        onRadiusChange: function onRadiusChange() {
+            console.log(this.radius);
+        }
+    },
+    created: function created() {
+        var _this = this;
+
+        Bus.$on('markers_fetched', function (data) {
+            _this.results = data.results;
+
+            console.log('event data', data);
+        });
+    }
+});
+
+/***/ }),
+/* 283 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-navigation-drawer",
+    {
+      staticClass: "grey lighten-4",
+      attrs: { fixed: "", clipped: "", app: "" },
+      model: {
+        value: _vm.drawer,
+        callback: function($$v) {
+          _vm.drawer = $$v
+        },
+        expression: "drawer"
+      }
+    },
+    [
+      _c(
+        "v-list",
+        { staticClass: "grey lighten-4", attrs: { dense: "" } },
+        [
+          _vm._l(_vm.results, function(item, i) {
+            return [
+              item.heading
+                ? _c(
+                    "v-layout",
+                    { key: i, attrs: { row: "", "align-center": "" } },
+                    [
+                      _c(
+                        "v-flex",
+                        { attrs: { xs6: "" } },
+                        [
+                          item.heading
+                            ? _c("v-subheader", [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(item.heading) +
+                                    "\n          "
+                                )
+                              ])
+                            : _vm._e()
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { staticClass: "text-xs-right", attrs: { xs6: "" } },
+                        [
+                          _c("v-btn", { attrs: { small: "", flat: "" } }, [
+                            _vm._v("edit")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : item.divider
+                  ? _c("v-divider", {
+                      key: i,
+                      staticClass: "my-3",
+                      attrs: { dark: "" }
+                    })
+                  : _c(
+                      "v-list-tile",
+                      { key: i, on: { click: function($event) {} } },
+                      [
+                        _c(
+                          "v-list-tile-action",
+                          [_c("v-icon", [_vm._v(_vm._s(item.icon))])],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-tile-content",
+                          [
+                            _c(
+                              "v-list-tile-title",
+                              { staticClass: "grey--text" },
+                              [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(item.text) +
+                                    "\n          "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+            ]
+          })
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0d3fd062", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

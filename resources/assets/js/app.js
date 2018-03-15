@@ -34,6 +34,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('shop-layout', require('./components/ShopLayout.vue'));
 Vue.component('shop-map', require('./components/ShopMap.vue'));
 Vue.component('place-search', require('./components/PlaceSearch.vue'));
+Vue.component('results', require('./components/Results.vue'));
 
 const app = new Vue({
     el: '#app'
