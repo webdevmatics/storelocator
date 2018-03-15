@@ -11,8 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-   
+use App\Shop;
+
+Route::post('/nearest-shops', function () {
+   $center=request('center');
+
+    // Search the rows in the markers table
+    $nearestShops=Shop::selectRaw("SELECT id, ( 3959 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance")
+        ->where('distance','<',25)->orderBy('distance');
+   return response(request()->all());
 });
 
 Auth::routes();

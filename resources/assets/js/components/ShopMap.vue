@@ -1,7 +1,7 @@
 <template>
   <gmap-map
     :center="center"
-    :zoom="7"
+    :zoom="zoom"
     style="width: 1300px; height: 100%"
   >
     <gmap-marker
@@ -19,13 +19,28 @@
 export default {
     data () {
       return {
-        center: {lat: 10.0, lng: 10.0},
-        markers: [{
-          position: {lat: 10.0, lng: 10.0}
-        }, {
-          position: {lat: 11.0, lng: 11.0}
-        }]
+        center: {lat: 42.363211, lng: -105.071875},
+        zoom:5,
+        markers: []
       }
+    },
+    methods:{
+        fetchLocations() {
+            axios.post('/api/nearest-shops',{center:this.center})
+                .then(response=>{
+                    let data=response.data;
+                    this.markers=data.markers;
+                });
+            ;
+        }
+    },
+    created(){
+        this.fetchLocations();
+        Bus.$on('markers_fetched',data=>{
+            this.markers=data.markers;
+            this.center=data.markers[0].position;
+            console.log('event data',data);
+        })
     }
   }
 </script>

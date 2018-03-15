@@ -15,6 +15,8 @@ Vue.use(Vuetify)
 
 import * as VueGoogleMaps from 'vue2-google-maps';
 
+window.Bus=new Vue;
+
 Vue.use(VueGoogleMaps, {
     load: {
         key: 'AIzaSyCLbarhqrxyP9XUh29eJzGQnbqbjgITShY',
@@ -29,8 +31,9 @@ Vue.use(VueGoogleMaps, {
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('store-layout', require('./components/StoreLayout.vue'));
+Vue.component('shop-layout', require('./components/ShopLayout.vue'));
 Vue.component('shop-map', require('./components/ShopMap.vue'));
+Vue.component('place-search', require('./components/PlaceSearch.vue'));
 
 const app = new Vue({
     el: '#app'

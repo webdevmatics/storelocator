@@ -51,16 +51,13 @@
         </template>
       </v-list>
     </v-navigation-drawer>
+    
 
     <v-toolbar color="amber" app absolute clipped-left>
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 mr-5">StoreLocator&nbsp;<span class="text">App</span></span>
-      <v-text-field
-        solo-inverted
-        flat
-        label="Search"
-        prepend-icon="search"
-      ></v-text-field>
+              <place-search></place-search>
+
       <v-spacer></v-spacer>
     </v-toolbar>
 
@@ -96,11 +93,15 @@ export default {
   }),
   props: {
     source: String
+  },
+
+  mounted() {
+   
   }
 };
 </script>
 
-<style>
+<style scoped>
 #keep main .container {
   height: 660px;
 }
@@ -111,5 +112,8 @@ export default {
 
 .text {
   font-weight: 400;
+}
+.autocomplete {
+  width: 200px;
 }
 </style>
