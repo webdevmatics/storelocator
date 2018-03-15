@@ -24,7 +24,7 @@
                 <!--single-line-->
         <!--&gt;</v-select>-->
 
-      <select v-model="radius" @change="fetchNearestLocations" class="p-5" style="width:100px">
+      <select class="input-group__input" v-model="radius" @change="fetchNearestLocations" >
           <option value="">Select Radius</option>
           <option value="100">100</option>
           <option value="200">200</option>
