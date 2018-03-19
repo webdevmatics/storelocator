@@ -75520,13 +75520,13 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(284)
+  __webpack_require__(260)
 }
 var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(262)
 /* template */
-var __vue_template__ = __webpack_require__(286)
+var __vue_template__ = __webpack_require__(263)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -75565,8 +75565,46 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 260 */,
-/* 261 */,
+/* 260 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(261);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(19)("032c8ced", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3afc77\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShopLayout.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3afc77\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShopLayout.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 261 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#keep main .container[data-v-0d3afc77] {\r\n  height: 660px;\n}\n.navigation-drawer__border[data-v-0d3afc77] {\r\n  display: none;\n}\n.text[data-v-0d3afc77] {\r\n  font-weight: 400;\n}\n.autocomplete[data-v-0d3afc77] {\r\n  width: 200px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
 /* 262 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -75612,7 +75650,82 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 263 */,
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    { attrs: { id: "inspire" } },
+    [
+      _c("results"),
+      _vm._v(" "),
+      _c(
+        "v-toolbar",
+        {
+          attrs: { color: "amber", app: "", absolute: "", "clipped-left": "" }
+        },
+        [
+          _c("v-toolbar-side-icon", {
+            nativeOn: {
+              click: function($event) {
+                _vm.drawer = !_vm.drawer
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "title ml-3 mr-5" }, [
+            _vm._v("StoreLocator "),
+            _c("span", { staticClass: "text" }, [_vm._v("App")])
+          ]),
+          _vm._v(" "),
+          _c("place-search"),
+          _vm._v(" "),
+          _c("v-spacer")
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-content",
+        [
+          _c(
+            "v-container",
+            {
+              staticClass: "grey lighten-4",
+              attrs: { fluid: "", "fill-height": "" }
+            },
+            [
+              _c(
+                "v-layout",
+                { attrs: { "justify-center": "", "align-center": "" } },
+                [_c("shop-map")],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0d3afc77", module.exports)
+  }
+}
+
+/***/ }),
 /* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -75698,7 +75811,7 @@ exports = module.exports = __webpack_require__(18)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -75709,6 +75822,13 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__InfoContent_vue__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__InfoContent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__InfoContent_vue__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -75732,7 +75852,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        'info-content': __WEBPACK_IMPORTED_MODULE_0__InfoContent_vue___default.a
+    },
     data: function data() {
         return {
             center: { lat: 42.363211, lng: -105.071875 },
@@ -75810,21 +75934,29 @@ var render = function() {
   return _c(
     "gmap-map",
     {
-      staticStyle: { width: "1300px", height: "100%" },
+      staticStyle: { width: "100%", height: "100%" },
       attrs: { center: _vm.center, zoom: _vm.zoom }
     },
     [
-      _vm._l(_vm.markers, function(m, index) {
-        return _c("gmap-marker", {
-          key: index,
-          attrs: { position: m.position, clickable: true, draggable: true },
-          on: {
-            click: function($event) {
-              _vm.toggleInfoWindow(m, index)
+      _c(
+        "gmap-cluster",
+        _vm._l(_vm.markers, function(m, index) {
+          return _c("gmap-marker", {
+            key: index,
+            attrs: {
+              position: m.position,
+              clickable: true,
+              icon: "/star-red.png",
+              draggable: true
+            },
+            on: {
+              click: function($event) {
+                _vm.toggleInfoWindow(m, index)
+              }
             }
-          }
+          })
         })
-      }),
+      ),
       _vm._v(" "),
       _c(
         "gmap-info-window",
@@ -75840,10 +75972,11 @@ var render = function() {
             }
           }
         },
-        [_vm._v("\n    " + _vm._s(_vm.infoContent) + "\n    ")]
+        [_c("info-content", { attrs: { content: _vm.infoContent } })],
+        1
       )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -76371,41 +76504,83 @@ if (false) {
 /* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
+var disposed = false
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(285)
+/* template */
+var __vue_template__ = __webpack_require__(286)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\InfoContent.vue"
 
-// load the styles
-var content = __webpack_require__(285);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(19)("032c8ced", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3afc77\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShopLayout.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0d3afc77\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShopLayout.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6c0038c4", Component.options)
+  } else {
+    hotAPI.reload("data-v-6c0038c4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
 /* 285 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(18)(false);
-// imports
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-
-// module
-exports.push([module.i, "\n#keep main .container[data-v-0d3afc77] {\r\n  height: 660px;\n}\n.navigation-drawer__border[data-v-0d3afc77] {\r\n  display: none;\n}\n.text[data-v-0d3afc77] {\r\n  font-weight: 400;\n}\n.autocomplete[data-v-0d3afc77] {\r\n  width: 200px;\n}\r\n", ""]);
-
-// exports
-
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['content'],
+    data: function data() {
+        return {
+            card_text: 'Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel. Dolorem ancillae an mei, ut putant invenire splendide mel, ea nec propriae adipisci. Ignota salutandi accusamus in sed, et per malis fuisset, qui id ludus appareat.'
+        };
+    }
+});
 
 /***/ }),
 /* 286 */
@@ -76416,53 +76591,42 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-app",
-    { attrs: { id: "inspire" } },
+    "div",
     [
-      _c("results"),
-      _vm._v(" "),
       _c(
-        "v-toolbar",
-        {
-          attrs: { color: "amber", app: "", absolute: "", "clipped-left": "" }
-        },
+        "v-card",
         [
-          _c("v-toolbar-side-icon", {
-            nativeOn: {
-              click: function($event) {
-                _vm.drawer = !_vm.drawer
-              }
+          _c("v-card-media", {
+            attrs: {
+              src: "https://vuetifyjs.com/static/doc-images/cards/desert.jpg",
+              height: "200px"
             }
           }),
           _vm._v(" "),
-          _c("span", { staticClass: "title ml-3 mr-5" }, [
-            _vm._v("StoreLocator "),
-            _c("span", { staticClass: "text" }, [_vm._v("App")])
+          _c("v-card-title", { attrs: { "primary-title": "" } }, [
+            _c("div", [
+              _c("h3", { staticClass: "headline mb-0" }, [
+                _vm._v(_vm._s(_vm.content))
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _vm._v("Located two hours south of Sydney in the "),
+                _c("br"),
+                _vm._v("Southern Highlands of New South Wales, ...")
+              ])
+            ])
           ]),
           _vm._v(" "),
-          _c("place-search"),
-          _vm._v(" "),
-          _c("v-spacer")
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-content",
-        [
           _c(
-            "v-container",
-            {
-              staticClass: "grey lighten-4",
-              attrs: { fluid: "", "fill-height": "" }
-            },
+            "v-card-actions",
             [
-              _c(
-                "v-layout",
-                { attrs: { "justify-center": "", "align-center": "" } },
-                [_c("shop-map")],
-                1
-              )
+              _c("v-btn", { attrs: { flat: "", color: "orange" } }, [
+                _vm._v("Share")
+              ]),
+              _vm._v(" "),
+              _c("v-btn", { attrs: { flat: "", color: "orange" } }, [
+                _vm._v("Explore")
+              ])
             ],
             1
           )
@@ -76479,7 +76643,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0d3afc77", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-6c0038c4", module.exports)
   }
 }
 

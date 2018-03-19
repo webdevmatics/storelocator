@@ -2,26 +2,35 @@
   <gmap-map
     :center="center"
     :zoom="zoom"
-    style="width: 1300px; height: 100%"
+    style="width: 100%; height: 100%"
   >
+    <gmap-cluster>
+
     <gmap-marker
       :key="index"
       v-for="(m, index) in markers"
       :position="m.position"
       :clickable="true"
+      icon="/star-red.png"
       :draggable="true"
       @click="toggleInfoWindow(m,index)"
     ></gmap-marker>
+    </gmap-cluster>
 
     <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
-      {{infoContent}}
+      <info-content :content="infoContent"></info-content>
+
       </gmap-info-window>
 
   </gmap-map>
 </template>
 
 <script>
+  import InfoContent from './InfoContent.vue'
 export default {
+      components:{
+          'info-content':InfoContent
+      },
     data () {
       return {
         center: {lat: 42.363211, lng: -105.071875},
